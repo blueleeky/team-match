@@ -75,6 +75,8 @@ const els = {
   exportButton: document.querySelector("#exportButton"),
   importInput: document.querySelector("#importInput"),
   resetButton: document.querySelector("#resetButton"),
+  actionsMenuButton: document.querySelector("#actionsMenuButton"),
+  actionsMenu: document.querySelector("#actionsMenu"),
   matchTemplate: document.querySelector("#matchTemplate"),
   modalButtons: document.querySelectorAll("[data-modal-target]"),
   modals: document.querySelectorAll(".modal-backdrop"),
@@ -226,7 +228,12 @@ function renderMatches() {
 
     const heading = document.createElement("div");
     heading.className = "time-heading";
-    heading.textContent = time;
+    const [startTime, endTime] = splitMatchTime(time);
+    heading.innerHTML = `
+      <span class="time-start">${startTime}</span>
+      <span class="time-separator">~</span>
+      <span class="time-end">${endTime}</span>
+    `;
     group.append(heading);
 
     const grid = document.createElement("div");
@@ -262,6 +269,11 @@ function renderMatches() {
     group.append(grid);
     els.matchList.append(group);
   });
+}
+
+function splitMatchTime(time) {
+  const [startTime, endTime] = String(time).split("~");
+  return [startTime || time, endTime || ""];
 }
 
 function createCourtSlot(court) {
@@ -629,6 +641,16 @@ function closeAllModals() {
   els.modals.forEach(closeModal);
 }
 
+function closeActionsMenu() {
+  els.actionsMenu.classList.remove("open");
+  els.actionsMenuButton.setAttribute("aria-expanded", "false");
+}
+
+function toggleActionsMenu() {
+  const isOpen = els.actionsMenu.classList.toggle("open");
+  els.actionsMenuButton.setAttribute("aria-expanded", String(isOpen));
+}
+
 function renderAddMatchPlayers() {
   const isTeamGame = els.newMatchKind.value === "team";
   els.newMatchCourtWrap.hidden = isTeamGame;
@@ -772,7 +794,19 @@ els.modals.forEach((modal) => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") closeAllModals();
+  if (event.key === "Escape") {
+    closeAllModals();
+    closeActionsMenu();
+  }
+});
+
+els.actionsMenuButton.addEventListener("click", (event) => {
+  event.stopPropagation();
+  toggleActionsMenu();
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".header-actions")) closeActionsMenu();
 });
 
 els.rankingSortButtons.forEach((button) => {
@@ -798,6 +832,7 @@ els.addMatchForm.addEventListener("submit", (event) => {
 });
 
 els.exportButton.addEventListener("click", () => {
+  closeActionsMenu();
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -808,6 +843,7 @@ els.exportButton.addEventListener("click", () => {
 });
 
 els.importInput.addEventListener("change", async () => {
+  closeActionsMenu();
   const [file] = els.importInput.files;
   if (!file) return;
 
@@ -826,6 +862,7 @@ els.importInput.addEventListener("change", async () => {
 });
 
 els.resetButton.addEventListener("click", () => {
+  closeActionsMenu();
   if (!confirm("모든 점수, 이름 변경, 팀명 변경을 초기 상태로 되돌릴까요?")) return;
   localStorage.removeItem(STORAGE_KEY);
   Object.assign(state, structuredClone(DEFAULT_STATE));
