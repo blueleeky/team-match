@@ -63,6 +63,8 @@ const els = {
   teamBRecord: document.querySelector("#teamBRecord"),
   leaderText: document.querySelector("#leaderText"),
   completedText: document.querySelector("#completedText"),
+  doublesText: document.querySelector("#doublesText"),
+  teamGameText: document.querySelector("#teamGameText"),
   topWinnerText: document.querySelector("#topWinnerText"),
   topWinnerDetail: document.querySelector("#topWinnerDetail"),
   matchList: document.querySelector("#matchList"),
@@ -397,7 +399,9 @@ function renderSummaryAndRanking() {
   els.teamBScore.textContent = `${teamStats.B.wins}점`;
   els.teamARecord.textContent = `${teamStats.A.wins}승 ${teamStats.A.losses}패`;
   els.teamBRecord.textContent = `${teamStats.B.wins}승 ${teamStats.B.losses}패`;
-  els.completedText.textContent = `완료 ${completedCount}/${state.matches.length} · 복식 ${teamName("A")} ${teamStats.A.doublesWins}:${teamStats.B.doublesWins} ${teamName("B")} · 단체전 ${teamName("A")} ${teamStats.A.teamWins}:${teamStats.B.teamWins} ${teamName("B")}`;
+  els.completedText.textContent = `완료 ${completedCount}/${state.matches.length}`;
+  els.doublesText.textContent = `복식 ${teamName("A")} ${teamStats.A.doublesWins}:${teamStats.B.doublesWins} ${teamName("B")}`;
+  els.teamGameText.textContent = `단체전 ${teamName("A")} ${teamStats.A.teamWins}:${teamStats.B.teamWins} ${teamName("B")}`;
 
   if (teamStats.A.wins > teamStats.B.wins) {
     els.leaderText.textContent = teamName("A");
