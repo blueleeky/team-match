@@ -51,7 +51,7 @@ const DEFAULT_STATE = {
 };
 
 const state = loadState();
-let activeCourtFilter = "all";
+let activeHourFilters = new Set(["all"]);
 let rankingSort = "wins";
 
 const els = {
@@ -70,7 +70,7 @@ const els = {
   matchList: document.querySelector("#matchList"),
   playerRanking: document.querySelector("#playerRanking"),
   playerEditor: document.querySelector("#playerEditor"),
-  courtFilter: document.querySelector("#courtFilter"),
+  timeFilter: document.querySelector("#timeFilter"),
   hideCompleted: document.querySelector("#hideCompleted"),
   exportButton: document.querySelector("#exportButton"),
   importInput: document.querySelector("#importInput"),
@@ -207,10 +207,8 @@ function renderPlayerSelects(container, match, team) {
 function renderMatches() {
   els.matchList.innerHTML = "";
   const visibleMatches = getSortedMatches().filter((match) => {
-    if (activeCourtFilter === "1") return match.court === 1;
-    if (activeCourtFilter === "2") return match.court === 2;
-    if (activeCourtFilter === "team") return match.type === "단체전";
-    return true;
+    if (activeHourFilters.has("all")) return true;
+    return activeHourFilters.has(String(getMatchStartHour(match)));
   }).filter((match) => {
     if (!els.hideCompleted.checked) return true;
     return getMatchStatus(match).label !== "완료";
@@ -240,31 +238,23 @@ function renderMatches() {
     grid.className = "court-grid";
     const orderedMatches = [...matches].sort((a, b) => (a.court ?? 99) - (b.court ?? 99));
 
-    if (activeCourtFilter === "all") {
-      const courtOneSlot = createCourtSlot(1);
-      const courtTwoSlot = createCourtSlot(2);
+    const courtOneSlot = createCourtSlot(1);
+    const courtTwoSlot = createCourtSlot(2);
 
-      orderedMatches.filter((match) => match.court === 1).forEach((match) => {
-        courtOneSlot.append(createMatchCard(match));
-      });
-      orderedMatches.filter((match) => match.court === 2).forEach((match) => {
-        courtTwoSlot.append(createMatchCard(match));
-      });
+    orderedMatches.filter((match) => match.court === 1).forEach((match) => {
+      courtOneSlot.append(createMatchCard(match));
+    });
+    orderedMatches.filter((match) => match.court === 2).forEach((match) => {
+      courtTwoSlot.append(createMatchCard(match));
+    });
 
-      grid.append(courtOneSlot, courtTwoSlot);
+    grid.append(courtOneSlot, courtTwoSlot);
 
-      orderedMatches.filter((match) => match.type === "단체전").forEach((match) => {
-        const card = createMatchCard(match);
-        card.classList.add("span-courts");
-        grid.append(card);
-      });
-    } else {
-      orderedMatches.forEach((match) => {
-        const card = createMatchCard(match);
-        if (match.type === "단체전") card.classList.add("span-courts");
-        grid.append(card);
-      });
-    }
+    orderedMatches.filter((match) => match.type === "단체전").forEach((match) => {
+      const card = createMatchCard(match);
+      card.classList.add("span-courts");
+      grid.append(card);
+    });
 
     group.append(grid);
     els.matchList.append(group);
@@ -295,6 +285,12 @@ function timeToMinutes(time) {
   const match = String(time).match(/(\d{1,2}):(\d{2})/);
   if (!match) return Number.MAX_SAFE_INTEGER;
   return Number(match[1]) * 60 + Number(match[2]);
+}
+
+function getMatchStartHour(match) {
+  const minutes = timeToMinutes(match.time);
+  if (!Number.isFinite(minutes) || minutes === Number.MAX_SAFE_INTEGER) return "";
+  return Math.floor(minutes / 60);
 }
 
 function createMatchCard(match) {
@@ -641,6 +637,13 @@ function closeAllModals() {
   els.modals.forEach(closeModal);
 }
 
+function updateTimeFilterStyles() {
+  els.timeFilter.querySelectorAll(".time-filter-chip").forEach((label) => {
+    const input = label.querySelector("input[type='checkbox']");
+    label.classList.toggle("checked", Boolean(input?.checked));
+  });
+}
+
 function closeActionsMenu() {
   els.actionsMenu.classList.remove("open");
   els.actionsMenuButton.setAttribute("aria-expanded", "false");
@@ -768,14 +771,32 @@ els.teamBName.addEventListener("change", () => {
   saveAndRender();
 });
 
-els.courtFilter.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-filter]");
-  if (!button) return;
+els.timeFilter.addEventListener("change", (event) => {
+  const checkbox = event.target.closest("input[type='checkbox']");
+  if (!checkbox) return;
 
-  activeCourtFilter = button.dataset.filter;
-  els.courtFilter.querySelectorAll("button").forEach((item) => {
-    item.classList.toggle("active", item === button);
-  });
+  const checkboxes = [...els.timeFilter.querySelectorAll("input[type='checkbox']")];
+  const allCheckbox = checkboxes.find((item) => item.value === "all");
+  const hourCheckboxes = checkboxes.filter((item) => item.value !== "all");
+
+  if (checkbox.value === "all" && checkbox.checked) {
+    hourCheckboxes.forEach((item) => {
+      item.checked = false;
+    });
+    activeHourFilters = new Set(["all"]);
+  } else {
+    allCheckbox.checked = false;
+    const selectedHours = hourCheckboxes.filter((item) => item.checked).map((item) => item.value);
+
+    if (selectedHours.length === 0) {
+      allCheckbox.checked = true;
+      activeHourFilters = new Set(["all"]);
+    } else {
+      activeHourFilters = new Set(selectedHours);
+    }
+  }
+
+  updateTimeFilterStyles();
   renderMatches();
 });
 
@@ -871,4 +892,5 @@ els.resetButton.addEventListener("click", () => {
 
 setupTimeSelects();
 renderAddMatchPlayers();
+updateTimeFilterStyles();
 render();

@@ -251,25 +251,35 @@ h2 {
   margin: 20px 0;
 }
 
-.segmented-control {
+.time-filter {
   display: inline-flex;
-  padding: 4px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.time-filter-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 13px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--surface);
-}
-
-.segmented-control button {
-  min-height: 36px;
-  padding: 0 14px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
   color: var(--muted);
-  font-weight: 800;
+  font-weight: 900;
 }
 
-.segmented-control button.active {
+.time-filter-chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.time-filter-chip.checked {
+  border-color: var(--text);
   background: var(--text);
   color: #fff;
 }
@@ -862,9 +872,9 @@ th {
     font-size: 14px;
   }
 
-  .segmented-control {
+  .time-filter {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
   }
 

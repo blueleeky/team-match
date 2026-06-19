@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>치고먹자 자체대회</title>
-    <link rel="stylesheet" href="./styles.css?v=20260618-1" />
+    <link rel="stylesheet" href="./styles.css?v=20260619-1" />
   </head>
   <body>
     <header class="app-header">
@@ -72,11 +72,31 @@
       </section>
 
       <section class="toolbar" aria-label="일정 필터">
-        <div class="segmented-control" id="courtFilter">
-          <button type="button" class="active" data-filter="all">전체</button>
-          <button type="button" data-filter="1">1코트</button>
-          <button type="button" data-filter="2">2코트</button>
-          <button type="button" data-filter="team">단체전</button>
+        <div class="time-filter" id="timeFilter" aria-label="시간대 필터">
+          <label class="time-filter-chip">
+            <input type="checkbox" value="all" checked />
+            전체
+          </label>
+          <label class="time-filter-chip">
+            <input type="checkbox" value="9" />
+            9시
+          </label>
+          <label class="time-filter-chip">
+            <input type="checkbox" value="10" />
+            10시
+          </label>
+          <label class="time-filter-chip">
+            <input type="checkbox" value="11" />
+            11시
+          </label>
+          <label class="time-filter-chip">
+            <input type="checkbox" value="12" />
+            12시
+          </label>
+          <label class="time-filter-chip">
+            <input type="checkbox" value="13" />
+            13시
+          </label>
         </div>
         <label class="toggle-row">
           <input type="checkbox" id="hideCompleted" />
@@ -231,6 +251,6 @@
       </article>
     </template>
 
-    <script src="./app.js?v=20260618-1"></script>
+    <script src="./app.js?v=20260619-1"></script>
   </body>
 </html>
