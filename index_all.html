@@ -301,6 +301,24 @@ h2 {
   font-weight: 700;
 }
 
+.player-search {
+  display: inline-grid;
+  grid-template-columns: auto 180px;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.player-search input {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
 .match-section {
   margin-top: 16px;
 }
@@ -887,6 +905,14 @@ th {
     width: 100%;
   }
 
+  .player-search {
+    grid-template-columns: 1fr;
+  }
+
+  .player-search input {
+    width: 100%;
+  }
+
   .summary-grid {
     grid-template-columns: 1fr;
   }
@@ -1058,6 +1084,10 @@ th {
             13시
           </label>
         </div>
+        <label class="player-search">
+          선수 검색
+          <input type="search" id="playerSearch" placeholder="이름 입력" autocomplete="off" />
+        </label>
         <label class="toggle-row">
           <input type="checkbox" id="hideCompleted" />
           완료 경기 숨기기
@@ -1285,6 +1315,7 @@ const els = {
   playerRanking: document.querySelector("#playerRanking"),
   playerEditor: document.querySelector("#playerEditor"),
   timeFilter: document.querySelector("#timeFilter"),
+  playerSearch: document.querySelector("#playerSearch"),
   hideCompleted: document.querySelector("#hideCompleted"),
   exportButton: document.querySelector("#exportButton"),
   importInput: document.querySelector("#importInput"),
@@ -1424,6 +1455,8 @@ function renderMatches() {
     if (activeHourFilters.has("all")) return true;
     return activeHourFilters.has(String(getMatchStartHour(match)));
   }).filter((match) => {
+    return matchesPlayerSearch(match);
+  }).filter((match) => {
     if (!els.hideCompleted.checked) return true;
     return getMatchStatus(match).label !== "완료";
   });
@@ -1505,6 +1538,18 @@ function getMatchStartHour(match) {
   const minutes = timeToMinutes(match.time);
   if (!Number.isFinite(minutes) || minutes === Number.MAX_SAFE_INTEGER) return "";
   return Math.floor(minutes / 60);
+}
+
+function matchesPlayerSearch(match) {
+  const query = els.playerSearch.value.trim().toLowerCase();
+  if (!query) return true;
+
+  const names = [...match.teamAPlayerIds, ...match.teamBPlayerIds]
+    .map((id) => getPlayer(id)?.name || "")
+    .join(" ")
+    .toLowerCase();
+
+  return names.includes(query);
 }
 
 function createMatchCard(match) {
@@ -2015,6 +2060,7 @@ els.timeFilter.addEventListener("change", (event) => {
 });
 
 els.hideCompleted.addEventListener("change", renderMatches);
+els.playerSearch.addEventListener("input", renderMatches);
 
 els.modalButtons.forEach((button) => {
   button.addEventListener("click", () => openModal(button.dataset.modalTarget));

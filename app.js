@@ -71,6 +71,7 @@ const els = {
   playerRanking: document.querySelector("#playerRanking"),
   playerEditor: document.querySelector("#playerEditor"),
   timeFilter: document.querySelector("#timeFilter"),
+  playerSearch: document.querySelector("#playerSearch"),
   hideCompleted: document.querySelector("#hideCompleted"),
   exportButton: document.querySelector("#exportButton"),
   importInput: document.querySelector("#importInput"),
@@ -210,6 +211,8 @@ function renderMatches() {
     if (activeHourFilters.has("all")) return true;
     return activeHourFilters.has(String(getMatchStartHour(match)));
   }).filter((match) => {
+    return matchesPlayerSearch(match);
+  }).filter((match) => {
     if (!els.hideCompleted.checked) return true;
     return getMatchStatus(match).label !== "완료";
   });
@@ -291,6 +294,18 @@ function getMatchStartHour(match) {
   const minutes = timeToMinutes(match.time);
   if (!Number.isFinite(minutes) || minutes === Number.MAX_SAFE_INTEGER) return "";
   return Math.floor(minutes / 60);
+}
+
+function matchesPlayerSearch(match) {
+  const query = els.playerSearch.value.trim().toLowerCase();
+  if (!query) return true;
+
+  const names = [...match.teamAPlayerIds, ...match.teamBPlayerIds]
+    .map((id) => getPlayer(id)?.name || "")
+    .join(" ")
+    .toLowerCase();
+
+  return names.includes(query);
 }
 
 function createMatchCard(match) {
@@ -801,6 +816,7 @@ els.timeFilter.addEventListener("change", (event) => {
 });
 
 els.hideCompleted.addEventListener("change", renderMatches);
+els.playerSearch.addEventListener("input", renderMatches);
 
 els.modalButtons.forEach((button) => {
   button.addEventListener("click", () => openModal(button.dataset.modalTarget));

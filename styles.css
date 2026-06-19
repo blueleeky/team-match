@@ -292,6 +292,24 @@ h2 {
   font-weight: 700;
 }
 
+.player-search {
+  display: inline-grid;
+  grid-template-columns: auto 180px;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.player-search input {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
 .match-section {
   margin-top: 16px;
 }
@@ -875,6 +893,14 @@ th {
   .time-filter {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .player-search {
+    grid-template-columns: 1fr;
+  }
+
+  .player-search input {
     width: 100%;
   }
 
