@@ -1,4 +1,4 @@
-const STORAGE_KEY = "badminton-team-match-2606";
+const STORAGE_KEY = "badminton-team-match-260620-schedule2";
 
 const DEFAULT_STATE = {
   teamNames: {
@@ -26,27 +26,27 @@ const DEFAULT_STATE = {
     { id: "b_w4", team: "B", name: "이금", gender: "F" },
   ],
   matches: [
-    { id: 1, time: "09:30~09:45", court: 1, type: "여복", teamAPlayerIds: ["a_w4", "a_w1"], teamBPlayerIds: ["b_w4", "b_w2"], teamAScore: null, teamBScore: null },
-    { id: 2, time: "09:30~09:45", court: 2, type: "남복", teamAPlayerIds: ["a_m1", "a_m5"], teamBPlayerIds: ["b_m1", "b_m4"], teamAScore: null, teamBScore: null },
-    { id: 3, time: "09:45~10:00", court: 1, type: "여복", teamAPlayerIds: ["a_w3", "a_w2"], teamBPlayerIds: ["b_w2", "b_w1"], teamAScore: null, teamBScore: null },
-    { id: 4, time: "09:45~10:00", court: 2, type: "남복", teamAPlayerIds: ["a_m4", "a_m2"], teamBPlayerIds: ["b_m3", "b_m5"], teamAScore: null, teamBScore: null },
-    { id: 5, time: "10:00~10:15", court: 1, type: "혼복", teamAPlayerIds: ["a_w1", "a_m3"], teamBPlayerIds: ["b_w4", "b_m2"], teamAScore: null, teamBScore: null },
-    { id: 6, time: "10:00~10:15", court: 2, type: "남복", teamAPlayerIds: ["a_m1", "a_m4"], teamBPlayerIds: ["b_m1", "b_m3"], teamAScore: null, teamBScore: null },
-    { id: 7, time: "10:15~10:30", court: 1, type: "혼복", teamAPlayerIds: ["a_w2", "a_m2"], teamBPlayerIds: ["b_w1", "b_m3"], teamAScore: null, teamBScore: null },
-    { id: 8, time: "10:15~10:30", court: 2, type: "혼복", teamAPlayerIds: ["a_w3", "a_m4"], teamBPlayerIds: ["b_w4", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 1, time: "09:30~09:45", court: 1, type: "여복", teamAPlayerIds: ["a_w1", "a_w3"], teamBPlayerIds: ["b_w2", "b_w1"], teamAScore: null, teamBScore: null },
+    { id: 2, time: "09:30~09:45", court: 2, type: "남복", teamAPlayerIds: ["a_m4", "a_m2"], teamBPlayerIds: ["b_m3", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 3, time: "09:45~10:00", court: 1, type: "혼복", teamAPlayerIds: ["a_w4", "a_m3"], teamBPlayerIds: ["b_w4", "b_m2"], teamAScore: null, teamBScore: null },
+    { id: 4, time: "09:45~10:00", court: 2, type: "남복", teamAPlayerIds: ["a_m1", "a_m5"], teamBPlayerIds: ["b_m1", "b_m4"], teamAScore: null, teamBScore: null },
+    { id: 5, time: "10:00~10:15", court: 1, type: "여복", teamAPlayerIds: ["a_w3", "a_w2"], teamBPlayerIds: ["b_w2", "b_w1"], teamAScore: null, teamBScore: null },
+    { id: 6, time: "10:00~10:15", court: 2, type: "남복", teamAPlayerIds: ["a_m5", "a_m4"], teamBPlayerIds: ["b_m4", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 7, time: "10:15~10:30", court: 1, type: "혼복", teamAPlayerIds: ["a_w1", "a_m3"], teamBPlayerIds: ["b_w2", "b_m2"], teamAScore: null, teamBScore: null },
+    { id: 8, time: "10:15~10:30", court: 2, type: "남복", teamAPlayerIds: ["a_m1", "a_m4"], teamBPlayerIds: ["b_m1", "b_m3"], teamAScore: null, teamBScore: null },
     { id: 9, time: "10:30~10:45", court: 1, type: "여복", teamAPlayerIds: ["a_w4", "a_w3"], teamBPlayerIds: ["b_w4", "b_w2"], teamAScore: null, teamBScore: null },
-    { id: 10, time: "10:30~10:45", court: 2, type: "남복", teamAPlayerIds: ["a_m5", "a_m3"], teamBPlayerIds: ["b_m4", "b_m2"], teamAScore: null, teamBScore: null },
-    { id: 11, time: "10:45~11:00", court: 1, type: "혼복", teamAPlayerIds: ["a_w4", "a_m1"], teamBPlayerIds: ["b_w4", "b_m1"], teamAScore: null, teamBScore: null },
+    { id: 10, time: "10:30~10:45", court: 2, type: "혼복", teamAPlayerIds: ["a_w2", "a_m5"], teamBPlayerIds: ["b_w1", "b_m4"], teamAScore: null, teamBScore: null },
+    { id: 11, time: "10:45~11:00", court: 1, type: "혼복", teamAPlayerIds: ["a_w3", "a_m1"], teamBPlayerIds: ["b_w1", "b_m1"], teamAScore: null, teamBScore: null },
     { id: 12, time: "10:45~11:00", court: 2, type: "혼복", teamAPlayerIds: ["a_w1", "a_m5"], teamBPlayerIds: ["b_w2", "b_m4"], teamAScore: null, teamBScore: null },
     { id: 13, time: "11:00~11:30", court: null, type: "단체전", title: "단체 게임", teamAPlayerIds: [], teamBPlayerIds: [], affectsPlayerStats: false, teamAScore: null, teamBScore: null },
-    { id: 14, time: "11:30~11:45", court: 1, type: "혼복", teamAPlayerIds: ["a_w4", "a_m3"], teamBPlayerIds: ["b_w4", "b_m2"], teamAScore: null, teamBScore: null },
-    { id: 15, time: "11:30~11:45", court: 2, type: "혼복", teamAPlayerIds: ["a_w2", "a_m5"], teamBPlayerIds: ["b_w1", "b_m4"], teamAScore: null, teamBScore: null },
-    { id: 16, time: "11:45~12:00", court: 1, type: "혼복", teamAPlayerIds: ["a_w3", "a_m1"], teamBPlayerIds: ["b_w1", "b_m1"], teamAScore: null, teamBScore: null },
-    { id: 17, time: "11:45~12:00", court: 2, type: "혼복", teamAPlayerIds: ["a_w1", "a_m4"], teamBPlayerIds: ["b_w2", "b_m3"], teamAScore: null, teamBScore: null },
-    { id: 18, time: "12:00~12:15", court: 1, type: "여복", teamAPlayerIds: ["a_w4", "a_w2"], teamBPlayerIds: ["b_w4", "b_w1"], teamAScore: null, teamBScore: null },
-    { id: 19, time: "12:00~12:15", court: 2, type: "남복", teamAPlayerIds: ["a_m2", "a_m3"], teamBPlayerIds: ["b_m5", "b_m2"], teamAScore: null, teamBScore: null },
-    { id: 20, time: "12:15~12:30", court: 1, type: "여복", teamAPlayerIds: ["a_w1", "a_w3"], teamBPlayerIds: ["b_w2", "b_w1"], teamAScore: null, teamBScore: null },
-    { id: 21, time: "12:15~12:30", court: 2, type: "남복", teamAPlayerIds: ["a_m5", "a_m2"], teamBPlayerIds: ["b_m4", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 14, time: "11:30~11:45", court: 1, type: "여복", teamAPlayerIds: ["a_w4", "a_w1"], teamBPlayerIds: ["b_w4", "b_w2"], teamAScore: null, teamBScore: null },
+    { id: 15, time: "11:30~11:45", court: 2, type: "남복", teamAPlayerIds: ["a_m2", "a_m4"], teamBPlayerIds: ["b_m2", "b_m3"], teamAScore: null, teamBScore: null },
+    { id: 16, time: "11:45~12:00", court: 1, type: "남복", teamAPlayerIds: ["a_m2", "a_m3"], teamBPlayerIds: ["b_m5", "b_m2"], teamAScore: null, teamBScore: null },
+    { id: 17, time: "11:45~12:00", court: 2, type: "혼복", teamAPlayerIds: ["a_w4", "a_m1"], teamBPlayerIds: ["b_w4", "b_m1"], teamAScore: null, teamBScore: null },
+    { id: 18, time: "12:00~12:15", court: 1, type: "혼복", teamAPlayerIds: ["a_w2", "a_m2"], teamBPlayerIds: ["b_w1", "b_m3"], teamAScore: null, teamBScore: null },
+    { id: 19, time: "12:00~12:15", court: 2, type: "남복", teamAPlayerIds: ["a_m1", "a_m4"], teamBPlayerIds: ["b_m1", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 20, time: "12:15~12:30", court: 1, type: "남복", teamAPlayerIds: ["a_m5", "a_m2"], teamBPlayerIds: ["b_m4", "b_m5"], teamAScore: null, teamBScore: null },
+    { id: 21, time: "12:15~12:30", court: 2, type: "혼복", teamAPlayerIds: ["a_w2", "a_m3"], teamBPlayerIds: ["b_w4", "b_m2"], teamAScore: null, teamBScore: null },
   ],
 };
 
@@ -316,6 +316,7 @@ function createMatchCard(match) {
 
     if (winner === "A") card.classList.add("winner-a");
     if (winner === "B") card.classList.add("winner-b");
+    if (match.type === "단체전") card.classList.add("team-game-card");
 
     fragment.querySelector(".match-id").textContent = match.court ? `${match.court}코트` : "공통";
     fragment.querySelector(".match-time").textContent = `${match.id}. ${match.time}`;
@@ -382,6 +383,13 @@ function calculateStats() {
   );
 
   state.matches.forEach((match) => {
+    if (match.affectsPlayerStats !== false) {
+      [...match.teamAPlayerIds, ...match.teamBPlayerIds].filter(Boolean).forEach((id) => {
+        if (!playerStats[id]) return;
+        playerStats[id].played += 1;
+      });
+    }
+
     const winner = getWinner(match);
     if (!winner) return;
 
@@ -401,12 +409,10 @@ function calculateStats() {
 
     winnerIds.filter(Boolean).forEach((id) => {
       if (!playerStats[id]) return;
-      playerStats[id].played += 1;
       playerStats[id].wins += 1;
     });
     loserIds.filter(Boolean).forEach((id) => {
       if (!playerStats[id]) return;
-      playerStats[id].played += 1;
       playerStats[id].losses += 1;
     });
   });
