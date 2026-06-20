@@ -558,6 +558,18 @@ select {
   overflow-x: auto;
 }
 
+#rankingModal .modal-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#rankingModal .table-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -572,6 +584,10 @@ td {
 }
 
 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--surface);
   color: var(--muted);
   font-size: 13px;
 }
